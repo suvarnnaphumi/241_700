@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test web3</title>
+    <style>
+        @font-face {
+            font-family: 'kanit';
+            src: url('./Kanit/Kanit-Regular.ttf');
+        }
+        
+        body{
+            background-color: rgb(225, 236, 173);
+            text-align: center;
+            font-family: 'kanit';
+        }
+        
+        #regis2{
+            font-size: 50px;
+            color: rgb(0, 0, 0);
+            text-align: center;
+        }
+
+        .input_name{
+            font-size: 5px;
+            border: 2px solid rgb(0, 0, 0);
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1 style="font-size:400%;">Register</h1>
+    <h1 id="regis2">(ลงทะเบียน)</h1>
+
+    <div>
+        <p1 style="font-size:150%;">
+            ชื่อ : <input class=input_name type="text" name="fname" style="font-size:100%;"><br><br>
+            นามสกุล : <input type="text" name="lname" style="font-size:100%;"><br><br>
+            เพศ : <input type="radio" name="male"> ชาย <input type="radio" name="female"> หญิง <br><br>
+            อายุ : <input type="number" name="age" min="0" max="120" style="font-size:100%;"><br><br>
+            งานอดิเรก : <input type="checkbox" name="hobby" value="football"> ฟุตบอล
+                    <input type="checkbox" name="hobby" value="basketball"> บาสบอล
+                    <input type="checkbox" name="hobby" value="game"> เล่นเกม <br><br>
+            รายละเอียดเพิ่มเติม: <br>
+                        <textarea name="details" row="5" cols="30" style="font-size:100%;"></textarea><br>
+                        <input type="submit" value="Submit" style="font-size:100%;">
+        </p1>
+    </div>
+
+</body>
+</html>
