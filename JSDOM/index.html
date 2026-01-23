@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test jsdom</title>
+</head>
+<body>
+    ชื่อ: <input
+    id="fname"
+    class="input"
+    type="text"
+    name="fname"
+    value="ชื่อทดสอบ">
+
+    นามสกุล: <input
+    id="lname" 
+    class="input"
+    type="text"
+    name="lname"
+    value="นามสกุลทดสอบ">
+
+    เบอร์โทร: <input
+    id="phone"
+    class="input"
+    type="text"
+    name="phone"
+    value="0123456">
+
+    <br><br>
+    งานอดิเรก:
+    <input type="checkbox" name="fname" value="football"> football
+    <input type="checkbox" name="fname" value="basketball"> basketball
+    <input type="checkbox" name="fname" value="swinming"> swinming
+    
+
+    <br><br>
+    <botton onclick="userClick()">Click Me</botton>
+
+
+    <br><br>
+    <input type="radio" name="gender" id="male" value="male" onchange="changeGender()"> Male
+    <input type="radio" name="gender" id="female" value="female" onchange="changeGender()"> Female
+    
+    
+
+    <script>
+        let fnanemInput = document.getElementById("fname");
+        console.log(fnanemInput.value); //ชื่อตัวแปร.ค่าที่อยากดึงข้อมูล
+        let lnanemInput = document.getElementById("lname");
+        console.log(lnanemInput.value); //ชื่อตัวแปร.ค่าที่อยากดึงข้อมูล
+
+        let inputs = document.getElementsByClassName("input"); //ดูตัวที่อยู่ใน class input (ค่า index จะออกมาด้วย)
+        console.log(inputs)
+
+        for(let i=0;i<inputs.length;i++){ //สามารถเอาค่า index มา loop เพื่อเรียกดู value ได้
+            console.log(inputs[i].value);
+        }
+
+        let inputs2 = document.querySelector("#fname"); //เรียกดู value ได้ผ่าน document.querySelector("#id")
+        let inputs3 = document.querySelector('input[type="text"]'); //ได้เหมือนกัน เรียกดู value ได้ผ่าน document.querySelector('input[type="ชื่อ type"]')
+        console.log(inputs2.value);
+        console.log(inputs3.value);
+
+        let checkboxes = document.querySelectorAll('input[type="checkbox"]'); //เรียกดู value ผ่าน document.querySelectorAll('input[type="ชื่อ type"]')
+        console.log(checkboxes);
+        for(let i=0;i<checkboxes.length;i++){ 
+            console.log(checkboxes[i].value);
+        }
+
+        //---------------------------------------------------------------------------------------------------
+
+        function userClick(){
+            console.log("Button was clicked!");
+        }
+
+        function divClick(){
+            console.log("Button was clicked!");
+        }
+
+        function changeGender(){
+            console.log("Gender changed!");
+
+            //เลือก gender
+            let genders = document.querySelectorAll('input[name="gender"]');
+
+            //ดูว่าอันไหนมัน check
+            for(let i=0;i<genders.length;i++){
+                if(genders[i].checked){
+                    console.log("Gender selected: "+genders[i].value);
+                }
+            }
+
+        }
+
+    </script>
+
+
+
+</body>
+</html>
