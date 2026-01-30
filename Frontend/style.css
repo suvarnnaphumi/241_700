@@ -1,0 +1,180 @@
+/* style.css - Dark Modern Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* 1. การตั้งค่าพื้นฐานและโทนสี */
+:root {
+    --bg-main: #121212;       /* สีพื้นหลังหลัก (ดำสนิท) */
+    --bg-card: #1e1e24;       /* สีพื้นหลังกล่องฟอร์ม (เทาเข้ม) */
+    --bg-input: #2a2a35;      /* สีพื้นหลังช่องกรอกข้อมูล */
+    --text-primary: #e0e0e0;  /* สีข้อความหลัก (ขาวนวล) */
+    --text-secondary: #a0a0a0;/* สีข้อความรอง (เทาอ่อน) */
+    --accent-color: #2979ff;  /* สีเน้น (ฟ้าสว่างนีออน) */
+    --accent-hover: #5390ff;  /* สีเน้นตอนเอาเมาส์ชี้ */
+    --border-color: #3a3a45;  /* สีขอบจางๆ */
+}
+
+* {
+    box-sizing: border-box;
+    /* ใช้ฟอนต์ที่ดูทันสมัย เช่น Poppins (ถ้าโหลดไม่ได้จะใช้ sans-serif ทั่วไป) */
+    font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px; /* เพิ่ม padding เผื่อหน้าจอเล็ก */
+}
+
+/* 2. กล่องคอนเทนเนอร์หลัก */
+.container {
+    background-color: var(--bg-card);
+    padding: 2.5rem;
+    border-radius: 16px;
+    /* เงาแบบฟุ้งๆ สีเข้ม ช่วยให้ลอยเด่นขึ้น */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid var(--border-color);
+}
+
+/* 3. หัวข้อฟอร์ม */
+.header {
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมดให้ดูแข็งแรง */
+    letter-spacing: 1px;
+    /* เส้นใต้สีนีออน */
+    position: relative;
+}
+.header::after {
+    content: '';
+    display: block;
+    width: 250px;
+    height: 3px;
+    background-color: var(--accent-color);
+    margin: 15px auto 0;
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--accent-color); /* แสงฟุ้งนีออน */
+}
+
+/* 4. การจัดวาง Layout (Flex) */
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.form-input {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary); /* สีหัวข้อ input เป็นเทาอ่อน */
+    font-weight: 500;
+}
+
+/* ปรับความกว้าง label ของ input แนวนอน */
+.flex.form-input .header-form {
+    min-width: 80px;
+    color: var(--text-primary); /* Label แนวนอนให้สีสว่างขึ้น */
+}
+
+/* 5. ตกแต่งช่อง Input และ Textarea */
+.form, textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: var(--bg-input);
+    border: 2px solid transparent; /* ซ่อนขอบไว้ก่อน */
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Effect ตอนคลิกที่ช่อง (Focus State) - สำคัญมากสำหรับธีมเท่ๆ */
+.form:focus, textarea:focus {
+    border-color: var(--accent-color);
+    background-color: #15151a; /* มืดลงนิดนึงตอนพิมพ์ */
+    box-shadow: 0 0 15px rgba(41, 121, 255, 0.3); /* แสงฟุ้งสีฟ้า */
+}
+
+textarea {
+    margin-top: 10px;
+    height: 100px;
+    resize: vertical;
+    display: block; /* แก้ปัญหา textarea ไม่เต็มความกว้าง */
+}
+
+/* 6. ส่วน Radio และ Checkbox */
+/* จัดระยะห่างให้ตัวเลือก เพศ/งานอดิเรก */
+.gender .flex, .form-input > div {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-primary);
+}
+
+/* ปรับ cursor ให้เป็นรูปมือตอนชี้ตัวเลือก */
+input[type="radio"], input[type="checkbox"] {
+    cursor: pointer;
+    accent-color: var(--accent-color); /* เปลี่ยนสี radio/checkbox browser รุ่นใหม่ */
+    transform: scale(1.1); /* ขยายให้ใหญ่ขึ้นนิดนึง */
+}
+
+/* 7. ปุ่มกด */
+.center {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+}
+
+.button {
+    background: linear-gradient(135deg, var(--accent-color), #1e40af); /* ไล่สีให้ดูมีมิติ */
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px; /* ปุ่มมนรี */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(41, 121, 255, 0.4); /* เงาสีฟ้า */
+}
+
+.button:hover {
+    background: linear-gradient(135deg, var(--accent-hover), var(--accent-color));
+    transform: translateY(-3px); /* ลอยขึ้นนิดนึงตอนชี้ */
+    box-shadow: 0 8px 25px rgba(41, 121, 255, 0.6); /* เงาชัดขึ้น */
+}
+
+.button:active {
+    transform: translateY(-1px);
+}
+
+/* 8. ปรับขนาดหน้าจอเล็ก (Responsive) */
+@media (max-width: 480px) {
+    .container {
+        padding: 1.5rem;
+    }
+    
+    /* บนจอมือถือ เปลี่ยน input แนวนอนเป็นแนวตั้งเพื่อง่ายต่อการกรอก */
+    .flex.form-input {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .flex.form-input .header-form {
+        margin-bottom: 5px;
+        color: var(--text-secondary);
+    }
+}
