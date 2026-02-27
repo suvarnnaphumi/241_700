@@ -91,7 +91,7 @@ app.post('/users',async(req,res)=>{
         data: results[0]
     });
     }catch(error){
-        console.error('Error inserting user:',err);
+        console.error('Error inserting user:',error);
         res.status(500).json({error:'Error adding user'});
     }
 })
