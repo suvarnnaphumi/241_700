@@ -1,0 +1,25 @@
+//show all container
+docker ps --all
+
+//run command
+docker run .....
+
+//stop command
+docker stop (container_id)
+
+//docker pull , create , start .....
+
+//เข้าไปดู container ใน docker 
+docker exec -it (container_id) sh
+
+//ออกจาก container
+exit
+
+//เข้าไปดู container ใน docker (bash)
+docker exec -it (container_id) bash
+
+//ดูโค้ดในไฟล์
+cat (file_name)
+
+//กำหนดเส้นทาง port
+docker run -p (port_เส้นทางที่ต้องการ:port_container) (name)
