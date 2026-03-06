@@ -20,8 +20,13 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 8000;
 const mysql = require('mysql2/promise');
+
+const cors = require('cors');
+app.use(cors());
+
 let users = [];
 let counter = 1;
+
 app.use(bodyParser.json());
 
 
@@ -134,7 +139,7 @@ app.put('/users/:id',async(req,res)=>{
 app.delete('/users/:id',async(req,res)=>{
     try{
         let id = req.params.id;
-        const results = await conn.query('DELETE FROM user WHERE id = ?',id);
+        const results = await conn.query('DELETE FROM users WHERE id = ?',[id]);
         res.json({
             message:'Use delete successfully',
             data:results[0]
