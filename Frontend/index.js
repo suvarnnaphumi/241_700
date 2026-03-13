@@ -30,7 +30,6 @@ const submitData = async () => {
     let descriptionDOM = document.querySelector('textarea[name=description]');
 
     let messageDOM = document.getElementById('message')
-
     try {
         let interest = ''
         for (let i = 0; i < interesDOMs.length; i++) {
@@ -50,7 +49,7 @@ const submitData = async () => {
         }
         console.log("submitData", userData);
 
-        const errors = validateData(userData);
+      const errors = validateData(userData);
         if(errors.length > 0){
             throw{
                 message: 'กรุณากรอกข้อมูลให้ครบถ้วน',
@@ -60,18 +59,21 @@ const submitData = async () => {
 
         const response = await axios.post('http://localhost:8000/users', userData);
         console.log('response', response);
-
         messageDOM.innerText = 'บันทึกข้อมูลสำเร็จ';
         messageDOM.className = 'message success';
     } catch (error) {
         console.log('Error message',error.message);
-        console.log('Error details',error.error);
-        /*if (error.response) {
-            console.log('Error response:', error.response.data);
-        }*/
+        console.log('Error details',error.errors);
+
+        if (error.response) {
+            console.log('Error response:', error.response);
+            error.message = error.response.data.message
+            error.errors = error.response.data.errors
+        }
+
         let htmlData = '<div>'
         htmlData += `<div>${error.message}</div>`;
-        htmlData += '<ul>'
+        htmlData += '<ul>';
         for(let i=0;i<error.errors.length;i++){
             htmlData += `<li>${error.errors[i]}</li>`;
         }
