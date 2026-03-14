@@ -17,38 +17,18 @@ sever.listen(port,host,() =>{
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
-const port = 8000;
 const mysql = require('mysql2/promise');
-
+const app = express();
 const cors = require('cors');
-app.use(cors());
 
-let users = [];
-let counter = 1;
+app.use(cors());
 
 app.use(bodyParser.json());
 
+const port = 8000;
 
-//แบบเก่า
-/*app.get('/testdb', (req, res) => {
-    mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database: 'webdb',
-        port: 8700
-    }).then((con) => {
-        con
-            .query('SELECT * FROM users')
-            .then((results) => {
-                res.json(results[0]);
-            }).catch((err) => {
-                res.json({ error: err.message });
-            });
-    })
-})*/
-
+let users = [];
+let counter = 1;
 
 let conn = null;
 const initMySQL = async ()=>{
@@ -86,20 +66,56 @@ app.get('/users',async(req,res)=>{
     res.json(results[0]);
 })
 
+const validateData = (userData) =>{
+    let errors = [];
+    if(!userData.firstname){
+        errors.push('กรุณากรอกชื่อ');
+    }
+    if(!userData.lastname){
+        errors.push('กรุณากรอกนามสกุล');
+    }
+    if(!userData.age){
+        errors.push('กรุณากรอกอายุ');
+    }
+    if(!userData.gender){
+        errors.push('กรุณากรอกเพศ');
+    }
+    if(!userData.interests){
+        errors.push('กรุณากรอกงานอดิเรก');
+    }
+    if(!userData.description){
+        errors.push('กรุณากรอกคำอธิบาย');
+    }
+    return errors;
+}
+
 // path: = POST /users สำหรับเพิ่มข้อมูล user ใหม่
 app.post('/users',async(req,res)=>{
     try{
         let user = req.body;
+        const errors = validateData(user);
+        if (errors.length>0){
+            throw{
+                message: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+                errors: errors
+            }
+        }
         const results = await conn.query('INSERT INTO users SET ?',user);
+        console.log('results:', results);
         res.json({
-        massage: 'User added successfully',
-        data: results[0]
-    });
+            massage: 'User added successfully',
+            data: results[0]
+    })
     }catch(error){
-        console.error('Error inserting user:',error);
-        res.status(500).json({error:'Error adding user'});
+        const errorMessage = error.message || 'Error creating user';
+        const errors = error.errors || [];
+        console.error('Error inserting user:',error.message);
+        res.status(500).json({
+            message: errorMessage,
+            errors:errors
+        });
     }
-})
+});
 
 app.get('/users/:id',async(req,res)=>{
     try{
@@ -108,12 +124,12 @@ app.get('/users/:id',async(req,res)=>{
     if(results[0].length===0){
         throw { statusCode:404,message:'User not found'};
     }
-    res.json(results[0]);
+    res.json(results[0][0]);
     }catch(error){
         console.log('Errir fetching user:',error);
         let statusCode = error.statusCode || 500;
         res.status(statusCode).json({
-            message:error.message||'Error fetching user'
+            message: error.message||'Error fetching user'
         });
     }
 })
@@ -124,11 +140,11 @@ app.put('/users/:id',async(req,res)=>{
     try{
         let id = req.params.id;
         let updateUser = req.body;
-        const results = await conn.query('UPDATE user SET ? WHERE id = ?',[updateUser,id])
+        const results = await conn.query('UPDATE users SET ? WHERE id = ?',[updateUser,id]);
         res.json({
             message:'User updated successfully',
             data:results[0]
-        })
+        });
     }catch(error){
         console.error('Error updating user:',error);
         res.status(500).json({message:'Error updating user'});
@@ -155,8 +171,6 @@ app.post('/user',(req,res)=>{
     user.id = counter
     counter += 1;
 });
-
-
 
 
 /**
@@ -222,6 +236,7 @@ app.delete('/users/:id',(req,res)=>{
 app.get('/users',(req,res)=>{
     res.json(users);
 });*/
+
 
 app.listen(port, async () => {
     await initMySQL();
