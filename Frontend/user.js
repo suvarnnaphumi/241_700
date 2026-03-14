@@ -7,21 +7,24 @@ window.onload = async () => {
 }
 
 const loadData = async () => {
+    
+    //เส้น Get (ShowData)
     const response = await axios.get(`${BASE_URL}/users`);
     console.log(response.data);
     const userDOM = document.getElementById("user");
     let htmlData = '<div>';
     for (let i = 0; i < response.data.length; i++) {
         let user = response.data[i];
-        htmlData += ` <div>
-        ${user.firstname} ${user.lastname}
-        <button>Edit</button>
+        htmlData += `<div>
+        ${user.id} ${user.firstname} ${user.lastname} ${user.gender}
+        <a href="index.html?id=${user.id}"><button>Edit</button></a> 
         <button class='delete' data-id='${user.id}'>Delete</button>
-        </div>`
+        </div>` //ปุ่ม Delete และ Edit (Ddit จะเป็นหน้าตา URL?id=...)
     }
     htmlData += '</div>';
     userDOM.innerHTML = htmlData;
 
+    //เส้น Delete id
     const deleteDOMs = document.getElementsByClassName("delete");
     for (let i = 0; i < deleteDOMs.length; i++) {
         deleteDOMs[i].addEventListener("click", async (event) => {
